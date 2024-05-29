@@ -5,11 +5,12 @@ export const config = {
         host: envString('HOST', 'localhost'),
         port: envNumber('PORT', 3001)
     },
-    mongo: {
-        database: envString('DB_NAME', 'zakaa_auth'),
-        host: envString('DB_HOST', 'mongodb://127.0.0.1:27017'),
-        username: envString('DB_USERNAME', 'mongo_username'),
-        password: envString('DB_PASSWORD', 'mongo_password')
+    postgres: {
+        database: envString('DB_NAME', 'postgres'),
+        host: envString('DB_HOST', 'localhost'),
+        port: envNumber('DB_PORT', 5432),
+        username: envString('DB_USERNAME', 'postgres'),
+        password: envString('DB_PASSWORD', 'nabeelncz')
     },
     secrets: {
         access_token: envString('ACCESS_TOKEN_SECRET', 'testsecret'),

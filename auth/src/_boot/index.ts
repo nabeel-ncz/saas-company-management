@@ -1,11 +1,11 @@
-import express, { Application } from "express"
+import * as express from "express"
+import { Application } from "express"
 import * as bodyParser from "body-parser"
 import { AppDataSource } from "@/data-source"
 
 export const main = async () => {
     try {
         await AppDataSource.initialize();
-    
         const app: Application = express();
         app.use(bodyParser.json());
     
