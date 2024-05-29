@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { generateAccessToken, verifyToken } from "../utils/jwt";
 import { UnAuthorizedError } from "../errors";
 
-export interface UserPayload {
+interface UserPayload {
     _id: string;
     email: string;
     role: string;
@@ -52,7 +52,7 @@ export const CurrentUser = async (
             next(new UnAuthorizedError());
         }
 
-        req.user = user;
+        req.user = user!;
         next();
 
     } catch (error) {

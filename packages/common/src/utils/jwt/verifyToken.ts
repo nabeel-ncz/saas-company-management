@@ -1,5 +1,10 @@
 import jwt from "jsonwebtoken";
-import { UserPayload } from "../../middlewares/currentUser";
+
+interface UserPayload {
+    _id: string;
+    email: string;
+    role: string;
+}
 
 export const verifyToken = (token: string, secret: string): Promise<UserPayload | null> => {
     return new Promise((resolve, reject) => {
