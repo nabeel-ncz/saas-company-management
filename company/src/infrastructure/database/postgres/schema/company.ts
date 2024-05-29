@@ -6,7 +6,7 @@ export class Company {
     id: number
 
     @Column({ nullable: false })
-    ownerId: string
+    ownerId: number
 
     @Column({ nullable: false })
     name: string

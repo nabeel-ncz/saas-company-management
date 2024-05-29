@@ -1,12 +1,19 @@
 import { AppDataSource } from "@/data-source"
 import { Company } from "../schema"
 
+interface CreateCompanyParams {
+    ownerId: number;
+    name: string;
+    address: string;
+    industry: string;
+}
+
 export const createCompany = async ({
     name,
     address,
     industry,
     ownerId
-}: Record<string, string>) => {
+}: CreateCompanyParams) => {
 
     const companyRepo = AppDataSource.getRepository(Company);
     

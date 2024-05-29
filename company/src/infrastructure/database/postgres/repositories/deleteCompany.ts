@@ -15,6 +15,6 @@ export const deleteCompany = async ({
         throw new Error("Company doesn't exist");
     }
     company.isDeleted = isDeleted;
-    const res = await companyRepo.save(company);
-    return res;
+    await companyRepo.save(company);
+    return;
 }
