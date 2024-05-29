@@ -6,8 +6,8 @@ const userRepository = AppDataSource.getRepository(User);
 export const findUserByEmail = async ({
     email
 }: Record<string, string>) => {
-    const user = await userRepository.findOneBy({
-        email
+    const user = await userRepository.findOne({
+        where: { email: email }
     });
     return user;
 }
