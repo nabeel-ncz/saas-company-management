@@ -1,2 +1,2 @@
-export * from "./ILoginUseCase";
+export * from "./ILoginUserUseCase";
 export * from "./ICreateUserUseCase";

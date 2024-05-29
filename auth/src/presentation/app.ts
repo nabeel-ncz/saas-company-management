@@ -1,6 +1,8 @@
 import * as express from "express";
 import * as cookieParser from "cookie-parser";
 import { Request, Response, NextFunction, Application } from "express";
+import { dependencies } from "@/_boot/dependencies";
+import { routes } from "@/infrastructure/routes";
 import helmet from "helmet";
 
 const app: Application = express();
@@ -16,12 +18,15 @@ app.all('/health', (req: Request, res: Response) => {
     })
 });
 
+app.use('/api/auth', routes(dependencies));
+
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
     next(new Error('Page not found!'));
 });
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    res.status(400).json('something webt wrong');
+    console.log(err);
+    res.status(400).json('something went wrong');
 });
 
 export default app;
