@@ -10,9 +10,10 @@ export abstract class CustomError extends Error {
 export class BadRequestError extends CustomError {
     public code = 400;
     public message = "Bad Request" ;
-    constructor() {
-        super('Bad Request');
-        Object.setPrototypeOf(this, BadRequestError.prototype);
+    constructor(message?: string) {
+        super(message ?? "Bad Request");
+        this.message = message ?? "Bad Request";
+        Object.setPrototypeOf(this, ValidationError.prototype);
     };
 };
 

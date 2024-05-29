@@ -49,13 +49,13 @@ export const CurrentUser = async (
         }
 
         if(!user) {
-            next(new UnAuthorizedError());
+            return next(new UnAuthorizedError());
         }
 
         req.user = user!;
-        next();
+        return next();
 
     } catch (error) {
-        next(new UnAuthorizedError());
+        return next(new UnAuthorizedError());
     }
 }
