@@ -12,6 +12,11 @@ export const config = {
         username: envString('DB_USERNAME', 'postgres'),
         password: envString('DB_PASSWORD', 'nabeelncz')
     },
+    redis: {
+        host: envString('REDIS_HOST', '127.0.0.1'),
+        port: envNumber('REDIS_HOST', 6379),
+        password: envString('REDIS_PASS', 'nabeelncz')
+    },
     secrets: {
         access_token: envString('ACCESS_TOKEN_SECRET', 'testsecret'),
         refresh_token: envString('REFRESH_TOKEN_SECRET', 'testsecret'),
