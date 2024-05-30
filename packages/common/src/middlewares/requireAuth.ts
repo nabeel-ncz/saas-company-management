@@ -3,9 +3,8 @@ import { generateAccessToken, verifyToken } from "../utils/jwt";
 import { UnAuthorizedError } from "../errors";
 
 interface UserPayload {
-    _id: string;
+    id: string;
     email: string;
-    role: string;
 }
 
 declare global {
@@ -16,7 +15,7 @@ declare global {
     }
 }
 
-export const CurrentUser = async (
+export const RequireAuth = async (
     req: Request,
     res: Response,
     next: NextFunction
