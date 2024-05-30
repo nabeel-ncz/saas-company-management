@@ -38,6 +38,6 @@ export class User {
     @UpdateDateColumn({ nullable: false })
     updatedAt: Date
 
-    @DeleteDateColumn({ nullable: false })
+    @DeleteDateColumn()
     deletedAt: Date
 }
