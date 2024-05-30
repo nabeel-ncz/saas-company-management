@@ -28,15 +28,21 @@ export const updateUser = async ({
 }) => {
 
     const user = await userRepository.findOneBy({ id });
-
-    user.name = name;
-    user.email = email;
-    user.role = role;
-    user.designation = designation;
+    if(name) {
+        user.name = name;
+    }
+    if(email) {
+        user.email = email;
+    }
+    if(role) {
+        user.role = role;
+    }
+    if(designation) {
+        user.designation = designation;
+    }
     if(companyId) {
         user.companyId = companyId;
     }
-
     const result = await userRepository.save(user);
 
     return result;

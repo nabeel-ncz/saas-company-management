@@ -11,7 +11,7 @@ export const getUserController = (dependencies: IDependencies) => {
         try {
 
             const id = req.params.id as string;
-            if(id) {
+            if(!id) {
                 throw new ValidationError("User Id is required!");
             }
             const data = await getUserByIdUseCase(dependencies).execute(Number(id));
