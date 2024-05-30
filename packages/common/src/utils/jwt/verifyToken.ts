@@ -1,9 +1,8 @@
 import jwt from "jsonwebtoken";
 
 interface UserPayload {
-    _id: string;
+    id: string;
     email: string;
-    role: string;
 }
 
 export const verifyToken = (token: string, secret: string): Promise<UserPayload | null> => {

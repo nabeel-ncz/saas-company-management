@@ -15,7 +15,7 @@ export const ErrorHandler = (
     }
     
     res.status(500).json({
-        message: 'Something went wrong'
+        message: err?.message || 'Something went wrong'
     });
     
 };

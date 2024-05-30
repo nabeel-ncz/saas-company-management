@@ -2,9 +2,8 @@ import jwt from "jsonwebtoken";
 
 export const generateAccessToken = (
     payload: {
-        _id: string,
-        email: string,
-        role: string
+        id: string,
+        email: string
     }
 ) => {
     return jwt.sign(
