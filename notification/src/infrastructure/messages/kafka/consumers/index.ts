@@ -1,5 +1,6 @@
 import emailVerification from "./emailVerification";
-
+import employeeCreated from "./employeeCreated";
 export {
-    emailVerification
+    emailVerification,
+    employeeCreated
 };
