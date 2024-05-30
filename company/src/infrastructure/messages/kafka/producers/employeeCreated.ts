@@ -5,10 +5,12 @@ import {
     USER_SERVICE_TOPIC
 } from "@company-management/common";
 import { producer } from "..";
+import { generateRandomPassword } from "@/_lib/utils";
 
 export default async function (data) {
     try {
         await producer.connect();
+        const randomPass = generateRandomPassword();
         await producer.sendBatch({
             topicMessages: [
                 {
@@ -29,7 +31,10 @@ export default async function (data) {
                     topic: AUTH_SERVICE_TOPIC,
                     messages: [{
                         key: EMPLOYEE_CREATED_MESSAGE,
-                        value: JSON.stringify(data)
+                        value: JSON.stringify({
+                            ...data,
+                            password: randomPass
+                        })
                     }]
                 }
             ]
