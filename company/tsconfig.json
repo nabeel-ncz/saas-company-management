@@ -1,28 +1,24 @@
 {
-   "compilerOptions": {
-     "target": "esnext",
+  "compilerOptions": {
+     "lib": [
+        "es5",
+        "es6"
+     ],
+     "target": "es5",
      "module": "commonjs",
-     "lib": ["esnext"],
-     "allowJs": true,
-     "checkJs": true,
-     "outDir": "./dist",
-     "rootDir": "./src",
+     "moduleResolution": "node",
+     "outDir": "./build",
      "emitDecoratorMetadata": true,
      "experimentalDecorators": true,
-     "removeComments": false,
-     "strict": true,
-     "noImplicitAny": false,
-     "noUnusedLocals": true,
-     "moduleResolution": "node",
+     "sourceMap": true,
      "baseUrl": "./src",
      "paths": {
-       "@/*": ["*"]
+        "@/*": [
+           "*"
+        ]
      },
-     "typeRoots": ["node_modules/@types"],
-     "esModuleInterop": true,
-     "skipLibCheck": false,
-     "forceConsistentCasingInFileNames": true
-   },
-   "include": ["src/**/*"],
-   "exclude": ["./dist", "./node_modules"]
- }
+     "typeRoots": [
+        "node_modules/@types"
+     ],
+  }
+}
