@@ -1,4 +1,5 @@
 import { IDependencies } from "@/application/interfaces/IDependencies";
+import { employeeDeleted } from "@/infrastructure/messages/kafka/producers";
 import { ValidationError } from "@company-management/common";
 import { Request, Response, NextFunction } from "express";
 
@@ -16,6 +17,10 @@ export const deleteUserController = (dependencies: IDependencies) => {
             }
             const userId = Number(req.body.id);
             await deleteUserUseCase(dependencies).execute(userId);
+            
+            // produce user delete message to [user, auth] 
+            await employeeDeleted({ id: userId });
+
             res.status(204).json({});
         } catch (error) {
             next(error);

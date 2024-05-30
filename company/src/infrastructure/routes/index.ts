@@ -3,7 +3,6 @@ import { IDependencies } from "@/application/interfaces/IDependencies";
 import { controllers } from "@/presentation/controllers";
 import { RequireAuth } from "@company-management/common";
 import { requireOwner } from "@/presentation/middleware";
-import { createUser, deleteUser, updateUser } from "../database/postgres/repositories";
 
 export const routes = (dependencies: IDependencies) => {
 
@@ -11,7 +10,10 @@ export const routes = (dependencies: IDependencies) => {
         createCompany,
         updateCompany,
         deleteCompany,
-        getCompanies
+        getCompanies,
+        createUser,
+        updateUser,
+        deleteUser
     } = controllers(dependencies);
 
     const router = Router();
