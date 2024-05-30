@@ -1,43 +1,37 @@
 import * as express from "express";
-import { Application } from "express";
-import { createProxyMiddleware } from "http-proxy-middleware";
+import { Application, Request, Response, NextFunction } from "express";
+import { createProxyMiddleware, responseInterceptor } from "http-proxy-middleware";
 
 const app: Application = express();
 
-app.all('/health', (req, res) => {
+// Health check endpoint
+app.all('/health', (req: Request, res: Response) => {
     res.send(`⚡⚡⚡`);
 });
 
-const services = [
-    {
-        url: process.env.AUTH_SERVICE_PREFIX || '/api/auth',
-        proxy: {
-            target: process.env.AUTH_SERVICE_URL || "http://localhost:3001",
-            changeOrigin: true,
-        }
-    },
-    {
-        url: process.env.USER_SERVICE_PREFIX || '/api/user',
-        proxy: {
-            target: process.env.USER_SERVICE_URL || "http://localhost:3003",
-            changeOrigin: true,
-        }
-    },
-    {
-        url: process.env.COMPANY_SERVICE_PREFIX || '/api/company',
-        proxy: {
-            target: process.env.COMPANY_SERVICE_URL || "http://localhost:3004",
-            changeOrigin: true,
-        }
+// Proxy middleware options with error handling
+const proxyOptions = (target: string) => ({
+    target,
+    changeOrigin: true,
+    onError: (err: Error, req: Request, res: Response, next: NextFunction) => {
+        console.error(`Error proxying request to ${target}:`, err.message);
+        res.status(500).send('Proxy error');
     }
-]
-
-services.forEach((route: { url: string, proxy: any }) => {
-    app.use(route.url, createProxyMiddleware(route.proxy));
 });
 
-app.listen(5000, () => {
-    console.log(`gateway server is listening at ${5000}`);
-})
+// Proxy middlewares
+const AuthService = createProxyMiddleware<Request, Response>(proxyOptions('http://localhost:3001/api/auth'));
+const UserService = createProxyMiddleware<Request, Response>(proxyOptions('http://localhost:3003/api/user'));
+const CompanyService = createProxyMiddleware<Request, Response>(proxyOptions('http://localhost:3004/api/company'));
+
+app.use('/api/auth', AuthService);
+app.use('/api/user', UserService);
+app.use('/api/company', CompanyService);
+
+// Start the server
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+    console.log(`Gateway server is listening at ${PORT}`);
+});
 
 export default app;
