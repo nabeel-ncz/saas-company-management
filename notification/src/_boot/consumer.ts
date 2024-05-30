@@ -1,5 +1,6 @@
 import { consumer } from "@/infrastructure/messages/kafka";
 import { createSubscriber } from "@/infrastructure/messages/kafka/subscriber";
+import { NOTIFICATION_SERVICE_TOPIC } from "@company-management/common";
 
 export const startConsumer = async () => {
     try {
@@ -7,7 +8,7 @@ export const startConsumer = async () => {
         await consumer.connect();
 
         await consumer.subscribe({
-            topic: `NOTIFICATION_SERVICE_TOPIC`,
+            topic: NOTIFICATION_SERVICE_TOPIC,
             fromBeginning: true
         });
 
