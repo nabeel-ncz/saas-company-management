@@ -9,7 +9,8 @@ enum UserRole {
 }
 
 interface UpdateUserParams { 
-    id?: number, 
+    id: number, 
+    companyId?:number,
     name: string, 
     email: string, 
     role: UserRole, 

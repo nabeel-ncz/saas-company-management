@@ -13,12 +13,14 @@ enum UserRole {
 
 export const updateUser = async ({
     id,
+    companyId,
     name,
     email,
     role,
     designation
 }: {
     id: number,
+    companyId?: number,
     name: string,
     email: string,
     role: UserRole,
@@ -31,6 +33,9 @@ export const updateUser = async ({
     user.email = email;
     user.role = role;
     user.designation = designation;
+    if(companyId) {
+        user.companyId = companyId;
+    }
 
     const result = await userRepository.save(user);
 
