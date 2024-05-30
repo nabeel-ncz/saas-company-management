@@ -7,7 +7,7 @@ interface UpdateCompanyParams {
     address: string;
     industry: string;
 }
-export const upateCompany = async ({
+export const updateCompany = async ({
     id,
     name,
     address,

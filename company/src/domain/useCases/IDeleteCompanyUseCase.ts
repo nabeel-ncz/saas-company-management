@@ -1,3 +1,8 @@
+
+interface DeleteCompanyParams {
+    id: number;
+    isDeleted: boolean;
+}
 export interface IDeleteCompanyUseCase {
-    execute(data: Record<string,string>): Promise<void>;
+    execute(data: DeleteCompanyParams): Promise<void>;
 }
