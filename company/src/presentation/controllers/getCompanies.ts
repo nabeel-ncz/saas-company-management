@@ -1,5 +1,4 @@
 import { IDependencies } from "@/application/interfaces/IDependencies";
-import { ValidationError } from "@company-management/common";
 import { Request, Response, NextFunction } from "express";
 
 export const getCompaniesController = (dependencies: IDependencies) => {
