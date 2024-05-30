@@ -24,7 +24,10 @@ export default async function (data) {
                     topic: NOTIFICATION_SERVICE_TOPIC,
                     messages: [{
                         key: EMPLOYEE_CREATED_MESSAGE,
-                        value: JSON.stringify(data)
+                        value: JSON.stringify({
+                            ...data,
+                            password: randomPass
+                        })
                     }]
                 },
                 {
