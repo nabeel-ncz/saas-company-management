@@ -18,7 +18,10 @@ export const createCompanyController = (dependencies: IDependencies) => {
             if(error) {
                 throw new ValidationError(error?.message);
             }
-            const result = await createCompanyUseCase(dependencies).execute(value);
+            const result = await createCompanyUseCase(dependencies).execute({
+                ...value,
+                ownerId: req.user.id
+            });
             res.status(201).json({
                 data: result,
                 message: 'company created'

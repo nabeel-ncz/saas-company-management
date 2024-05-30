@@ -1,9 +1,6 @@
 import * as Joi from "joi";
 
 export const createCompanyValidation = Joi.object({
-    ownerId: Joi
-        .number()
-        .required(),
 
     name: Joi
         .string()

@@ -11,27 +11,28 @@ enum UserRole {
     INTERNAL = "internal"
 }
 
-export const createUser = async ({
+export const updateUser = async ({
     id,
     name,
     email,
     role,
     designation
-}: { 
-    id?: number, 
-    name: string, 
-    email: string, 
-    role: UserRole, 
-    designation: string 
+}: {
+    id: number,
+    name: string,
+    email: string,
+    role: UserRole,
+    designation: string
 }) => {
-    const user = new User();
-    if(id) {
-        user.id = id;
-    }
+
+    const user = await userRepository.findOneBy({ id });
+
     user.name = name;
     user.email = email;
     user.role = role;
-    user.designation = designation
+    user.designation = designation;
+
     const result = await userRepository.save(user);
+
     return result;
 }
