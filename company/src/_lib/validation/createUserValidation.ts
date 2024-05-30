@@ -3,7 +3,7 @@ import * as Joi from "joi";
 export const createUserValidation = Joi.object({
 
     companyId: Joi
-        .string()
+        .number()
         .required(),
 
     name: Joi
