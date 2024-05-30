@@ -17,6 +17,7 @@ export interface IUtilities {
 
     //validation
     signupValidation: joi.ObjectSchema<any>
+    loginValidation: joi.ObjectSchema<any>
 
     // otp
     generateVerificationOTP: () => string;

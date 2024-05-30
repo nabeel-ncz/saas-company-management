@@ -7,10 +7,12 @@ export const routes = (dependencies: IDependencies) => {
     const router = express.Router();
 
     const {
-        signup
+        signup,
+        login
     } = controllers(dependencies);
 
     router.post('/sign-up', signup);
+    router.post('/log-in', login);
 
     return router;
 }

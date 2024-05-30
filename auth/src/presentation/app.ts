@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as cookieParser from "cookie-parser";
 import { Request, Response, NextFunction, Application } from "express";
+import { ErrorHandler, NotFoundError } from "@company-management/common";
 import { dependencies } from "@/_boot/dependencies";
 import { routes } from "@/infrastructure/routes";
 import helmet from "helmet";
@@ -21,12 +22,9 @@ app.all('/health', (req: Request, res: Response) => {
 app.use('/api/auth', routes(dependencies));
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
-    next(new Error('Page not found!'));
+    next(new NotFoundError());
 });
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    console.log(err);
-    res.status(400).json('something went wrong');
-});
+app.use(ErrorHandler);
 
 export default app;

@@ -1,6 +1,7 @@
 import { IDependencies } from "@/application/interfaces/IDependencies";
 import { emailVerificationProducer, userCreatedProducer } from "@/infrastructure/messages/kafka/producer";
 import { redisClient } from "@/infrastructure/redis";
+import { ValidationError } from "@company-management/common";
 import { Request, Response, NextFunction } from "express";
 
 export const signupController = (dependencies: IDependencies) => {
@@ -21,9 +22,11 @@ export const signupController = (dependencies: IDependencies) => {
         try {
             const { value, error } = signupValidation.validate(req.body);
             if (error) {
-                throw new Error(error.message);
+                return next(new ValidationError(error.message));
             }
+
             value.password = await hashPassword(value.password);
+            
             if(!value.otp) {
                 const otp = generateVerificationOTP();
                 // produce message to notification service
@@ -43,9 +46,7 @@ export const signupController = (dependencies: IDependencies) => {
             // check the otp is valid or not
             const storedOtp = await redisClient.get(`otp:${value.email}`);
             if(!storedOtp || storedOtp !== value.otp) {
-                res.status(400).json({
-                    error: 'OTP is invalid, Please try again!'
-                });
+                return next(new ValidationError('OTP is invalid, Please try again!'));
             }
             
             // email is verified - now store the user data

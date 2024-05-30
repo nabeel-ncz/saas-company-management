@@ -1,10 +1,6 @@
 import * as Joi from "joi";
 
-export const signupValidation = Joi.object({
-    name: Joi
-        .string()
-        .required(),
-
+export const loginValidation = Joi.object({
     email: Joi
         .string()
         .email()
@@ -14,8 +10,4 @@ export const signupValidation = Joi.object({
         .string()
         .pattern(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/))
         .required(),
-
-    role: Joi.string().optional().default('owner'),
-
-    otp: Joi.string().length(6).optional()
 })
