@@ -8,11 +8,13 @@ export const routes = (dependencies: IDependencies) => {
 
     const {
         signup,
-        login
+        login,
+        logout
     } = controllers(dependencies);
 
-    router.post('/sign-up', signup);
-    router.post('/log-in', login);
+    router.post('/signup', signup);
+    router.post('/login', login);
+    router.delete('/logout', logout);
 
     return router;
 }
