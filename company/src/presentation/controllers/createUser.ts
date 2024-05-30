@@ -15,12 +15,19 @@ export const createUserController = (dependencies: IDependencies) => {
 
         try {
             const { value, error } = createUserValidation.validate(req.body);
+            
             if (error) {
                 throw new ValidationError(error?.message);
             }
+            
             const isCompanyExist = await getCompanyByIdUseCase(dependencies).execute(value.companyId);
+            
             if(!isCompanyExist) {
                 throw new ValidationError("company doesn't exist");
+            }
+
+            if(value.role === "admin" || value.role === "owner") {
+                throw new ValidationError("User role can't be admin and owner");
             }
 
             const result = await createUserUseCase(dependencies).execute({
