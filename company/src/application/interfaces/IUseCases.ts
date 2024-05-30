@@ -1,4 +1,3 @@
-import { IGetCompanyByIdUseCase } from "@/domain/useCases";
 import { IDependencies } from "./IDependencies";
 import {
     ICreateCompanyUseCase,
@@ -7,7 +6,9 @@ import {
     IGetCompaniesUseCase,
     ICreateUserUseCase,
     IUpdateUserUseCase,
-    IDeleteUserUseCase
+    IDeleteUserUseCase,
+    IGetCompanyByIdUseCase, 
+    IGetUserByIdUseCase
 } from "@/domain/useCases";
 
 export interface IUseCases {
@@ -19,4 +20,5 @@ export interface IUseCases {
     createUserUseCase: (dependencie: IDependencies) => ICreateUserUseCase
     updateUserUseCase: (dependencie: IDependencies) => IUpdateUserUseCase
     deleteUserUseCase: (dependencie: IDependencies) => IDeleteUserUseCase
+    getUserByIdUseCase:  (dependencie: IDependencies) => IGetUserByIdUseCase
 };

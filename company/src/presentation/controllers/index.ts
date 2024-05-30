@@ -6,6 +6,7 @@ import { getCompaniesController } from "./getCompanies";
 import { createUserController } from "./createUser";
 import { updateUserController } from "./updateUser";
 import { deleteUserController } from "./deleteUser";
+import { getUserController } from "./getUser";
 
 export const controllers = (dependencies: IDependencies) => {
     return {
@@ -15,6 +16,7 @@ export const controllers = (dependencies: IDependencies) => {
         getCompanies: getCompaniesController(dependencies),
         createUser: createUserController(dependencies),
         updateUser: updateUserController(dependencies),
-        deleteUser: deleteUserController(dependencies)
+        deleteUser: deleteUserController(dependencies),
+        getUser: getUserController(dependencies)
     }
 };

@@ -51,4 +51,5 @@ export interface IRepositories {
     createUser: (data: CreateUserParams) => Promise<UserEntity | Error | null>;
     updateUser: (data: UpdateUserParams) => Promise<UserEntity | Error | null>;
     deleteUser: (id: number) => Promise<void>;
+    findUserById: (id: number) => Promise<UserEntity | null>
 };
