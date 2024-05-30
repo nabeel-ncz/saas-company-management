@@ -28,6 +28,7 @@ enum UserRole {
 
 interface CreateUserParams { 
     id?: number, 
+    companyId?: number;
     name: string, 
     email: string, 
     role: UserRole, 
@@ -35,7 +36,8 @@ interface CreateUserParams {
 }
 
 interface UpdateUserParams { 
-    id?: number, 
+    id: number, 
+    companyId?:number,
     name: string, 
     email: string, 
     role: UserRole, 

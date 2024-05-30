@@ -10,7 +10,7 @@ enum UserRole {
 
 interface CreateUserParams { 
     id?: number, 
-    companyId: number,
+    companyId?: number;
     name: string, 
     email: string, 
     role: UserRole, 
