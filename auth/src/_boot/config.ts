@@ -6,7 +6,7 @@ export const config = {
         port: envNumber('PORT', 3001)
     },
     postgres: {
-        database: envString('DB_NAME', 'postgres'),
+        database: envString('DB_NAME', 'company_auth'),
         host: envString('DB_HOST', 'localhost'),
         port: envNumber('DB_PORT', 5432),
         username: envString('DB_USERNAME', 'postgres'),
