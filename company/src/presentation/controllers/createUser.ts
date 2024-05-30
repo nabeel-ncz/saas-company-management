@@ -5,7 +5,7 @@ import { Request, Response, NextFunction } from "express";
 export const createUserController = (dependencies: IDependencies) => {
 
     const {
-        useCases: { createUserUseCase },
+        useCases: { createUserUseCase, getCompanyByIdUseCase },
         utilities: {
             createUserValidation
         }
@@ -15,12 +15,18 @@ export const createUserController = (dependencies: IDependencies) => {
 
         try {
             const { value, error } = createUserValidation.validate(req.body);
-            if(error) {
+            if (error) {
                 throw new ValidationError(error?.message);
             }
+            const isCompanyExist = await getCompanyByIdUseCase(dependencies).execute(value.companyId);
+            if(!isCompanyExist) {
+                throw new ValidationError("company doesn't exist");
+            }
+
             const result = await createUserUseCase(dependencies).execute({
                 ...value,
             });
+            
             res.status(201).json({
                 data: result,
                 message: 'user created'
