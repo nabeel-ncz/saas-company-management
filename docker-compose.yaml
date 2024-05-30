@@ -1,0 +1,127 @@
+version: '3.8'
+
+services:
+  # Kafka and Zookeeper
+  zookeeper:
+    image: confluentinc/cp-zookeeper:6.2.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:6.2.0
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  # Redis
+  redis:
+    image: redis/redis-stack:latest
+    container_name: redistack
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+
+  # PostgreSQL for auth service
+  postgres-auth:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: auth
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+
+  # Auth Service
+  auth:
+    image: nabeelncz/saas-cm-auth:latest
+    depends_on:
+      - postgres-auth
+    environment:
+      PORT: 3001
+      # DATABASE_URL: postgres://user:password@postgres-auth:5432/auth
+      # KAFKA_BROKER: kafka:9092
+      # REDIS_URL: redis://redis:6379
+    ports:
+      - "3001:3001"
+
+  # PostgreSQL for user service
+  postgres-user:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: user
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+
+  # User Service
+  user:
+    image: nabeelncz/saas-cm-user:latest
+    depends_on:
+      - postgres-user
+    environment:
+      PORT: 3003
+      # DATABASE_URL: postgres://user:password@postgres-user:5432/user
+      # KAFKA_BROKER: kafka:9092
+    ports:
+      - "3003:3003"
+
+  # Notification Service
+  notification:
+    image: nabeelncz/saas-cm-notification:latest
+    environment:
+      PORT: 3002
+      # KAFKA_BROKER: kafka:9092
+    ports:
+      - "3002:3002"
+
+  # PostgreSQL for company service
+  postgres-company:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: company
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5435:5432"
+
+  # Company Service
+  company:
+    image: nabeelncz/saas-cm-company:latest
+    depends_on:
+      - postgres-company
+    environment:
+      PORT: 3004
+      # DATABASE_URL: postgres://user:password@postgres-company:5432/company
+      # KAFKA_BROKER: kafka:9092
+    ports:
+      - "3004:3004"
+
+  # Gateway Service
+  gateway:
+    image: nabeelncz/saas-cm-gateway:latest
+    ports:
+      - "4000:4000"
+    depends_on:
+      - auth
+      - user
+      - notification
+      - company
+      - kafka
+      - redis
+    environment:
+      AUTH_SERVICE_URL: http://auth:3001
+      USER_SERVICE_URL: http://user:3003
+      NOTIFICATION_SERVICE_URL: http://notification:3002
+      COMPANY_SERVICE_URL: http://company:3004
+      KAFKA_BROKER: kafka:9092
+      REDIS_URL: redis://redis:6379
