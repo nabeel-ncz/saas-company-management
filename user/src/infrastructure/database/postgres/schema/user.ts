@@ -1,4 +1,4 @@
-import { Entity, Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Entity, Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
 
 export enum UserRole {
     ADMIN = "admin",
@@ -16,10 +16,10 @@ export class User {
     @Column({ nullable: true })
     companyId: number
 
-    @Column({nullable: false})
+    @Column({ nullable: false })
     name: string
 
-    @Column({nullable: false})
+    @Column({ nullable: false })
     email: string
 
     @Column({
@@ -32,9 +32,12 @@ export class User {
     @Column({ nullable: false })
     designation: string
 
-    @CreateDateColumn({ nullable: false})
+    @CreateDateColumn({ nullable: false })
     createdAt: Date
 
-    @UpdateDateColumn({nullable: false})
+    @UpdateDateColumn({ nullable: false })
     updatedAt: Date
+
+    @DeleteDateColumn({ nullable: false })
+    deletedAt: Date
 }
