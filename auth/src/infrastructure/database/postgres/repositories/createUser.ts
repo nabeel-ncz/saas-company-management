@@ -4,12 +4,22 @@ import { User } from "@/infrastructure/database/postgres/schema";
 const userRepository = AppDataSource.getRepository(User);
 
 export const createUser = async ({
+    id,
     name,
     email,
     password,
     role
-}: Record<string, string>) => {
+}: {
+    id?: number
+    name: string
+    email: string
+    password: string
+    role: string
+}) => {
     const user = new User();
+    if(id) {
+        user.id = id;
+    }
     user.name = name;
     user.email = email;
     user.password = password;
