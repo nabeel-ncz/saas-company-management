@@ -1,12 +1,13 @@
 import { ISubscriber } from "@company-management/common";
-import { emailVerification } from "./consumers";
+import { emailVerification, employeeCreated } from "./consumers";
 
 export interface INotificationSubscriber extends Pick<
-    ISubscriber, 'userEmailVerfication'
+    ISubscriber, 'userEmailVerfication' | 'employeeCreated'
 > { }
 
 export const createSubscriber = (): INotificationSubscriber => {
     return {
-        userEmailVerfication: emailVerification
+        userEmailVerfication: emailVerification,
+        employeeCreated: employeeCreated
     }
 }

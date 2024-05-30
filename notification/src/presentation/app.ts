@@ -5,9 +5,10 @@ import express, {
     NextFunction
 } from "express";
 import { dependencies } from "@/_boot/dependencies";
+import { ErrorHandler, NotFoundError } from "@company-management/common";
+import { routes } from "@/infrastructure/routes";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
-import { routes } from "@/infrastructure/routes";
 
 const app: Application = express();
 
@@ -25,12 +26,9 @@ app.all('/health', (req: Request, res: Response) => {
 app.use('/api/notification', routes(dependencies));
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
-    next(new Error('Page not found!'));
+    next(new NotFoundError());
 });
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    console.log(err);
-    res.status(400).json('Something went wrong');
-});
+app.use(ErrorHandler);
 
 export default app;
