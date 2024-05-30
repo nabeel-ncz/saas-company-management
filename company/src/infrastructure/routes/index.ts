@@ -23,9 +23,9 @@ export const routes = (dependencies: IDependencies) => {
         .delete(RequireAuth, requireOwner, deleteCompany);
 
     router.route('/employee')
-        .post(createUser)
-        .put(updateUser)
-        .delete(deleteUser);
+        .post(RequireAuth, requireOwner, createUser)
+        .put(RequireAuth, requireOwner, updateUser)
+        .delete(RequireAuth, requireOwner, deleteUser);
 
     return router;
 }

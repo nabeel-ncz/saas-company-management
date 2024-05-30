@@ -1,4 +1,5 @@
 import { IDependencies } from "@/application/interfaces/IDependencies";
+import { employeeCreated } from "@/infrastructure/messages/kafka/producers";
 import { ValidationError } from "@company-management/common";
 import { Request, Response, NextFunction } from "express";
 
@@ -34,6 +35,9 @@ export const createUserController = (dependencies: IDependencies) => {
                 ...value,
             });
             
+            // employee created message produce
+            await employeeCreated(result);
+
             res.status(201).json({
                 data: result,
                 message: 'user created'
