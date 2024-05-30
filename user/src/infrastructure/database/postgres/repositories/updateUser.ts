@@ -11,7 +11,7 @@ enum UserRole {
     INTERNAL = "internal"
 }
 
-export const createUser = async ({
+export const updateUser = async ({
     id,
     name,
     email,
@@ -20,20 +20,27 @@ export const createUser = async ({
     companyId
 }: { 
     id: number, 
-    name: string, 
-    email: string, 
-    role: UserRole, 
-    designation: string 
+    name?: string, 
+    email?: string, 
+    role?: UserRole, 
+    designation?: string,
     companyId?: number
 }) => {
-    const user = new User();
-    user.id = id;
-    user.name = name;
-    user.email = email;
-    user.role = role;
-    user.designation = designation
+    const user = await userRepository.findOneBy({ id });
+    if(name) {
+        user.name = name;
+    }
+    if(email) {
+        user.email = email;
+    }
+    if(role) {
+        user.role = role;
+    }
+    if(designation) {
+        user.designation = designation;
+    }
     if(companyId) {
-        user.companyId = companyId
+        user.companyId = companyId;
     }
     const result = await userRepository.save(user);
     return result;
