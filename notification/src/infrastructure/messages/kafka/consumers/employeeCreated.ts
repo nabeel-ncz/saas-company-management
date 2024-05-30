@@ -2,21 +2,21 @@ import { generateEmployeeNotifyEmail } from "@/_lib/sendGrid";
 
 export default async function ({
     email,
-    passsword
+    password
 }) {
 
     console.log(`
     ===================================
     email-verification-message-consumed
     ===================================
-    ${email}, ${passsword}
+    ${email}, ${password}
     `);
 
     try {
         //send mail using send-grid
         await generateEmployeeNotifyEmail({
             email: email,
-            password: passsword
+            password: password
         });
     } catch (error: any) {
         console.log(error);
