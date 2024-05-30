@@ -1,3 +1,4 @@
+import { hashPassword } from "@/_lib";
 import { createUser } from "@/infrastructure/database/postgres/repositories";
 
 export default async function({
@@ -8,11 +9,12 @@ export default async function({
     role
 }) {
     try {
+        const hash = await hashPassword(password);
         await createUser({
             id: id as number,
             name: name as string,
             email: email as string,
-            password: password as string,
+            password: hash,
             role: role as string
         });
     } catch (error) {
