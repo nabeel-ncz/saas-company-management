@@ -1,4 +1,5 @@
-import { Entity, Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Entity, Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, ManyToOne } from "typeorm";
+import { Company } from "./company";
 
 export enum UserRole {
     ADMIN = "admin",
@@ -14,12 +15,15 @@ export class User {
     id: number
 
     @Column({ nullable: true })
-    companyId: number
+    companyId: number;
 
-    @Column({nullable: false})
+    @ManyToOne(() => Company)
+    company: Company;
+
+    @Column({ nullable: false })
     name: string
 
-    @Column({nullable: false})
+    @Column({ nullable: false })
     email: string
 
     @Column({
@@ -32,9 +36,9 @@ export class User {
     @Column({ nullable: false })
     designation: string
 
-    @CreateDateColumn({ nullable: false})
+    @CreateDateColumn({ nullable: false })
     createdAt: Date
 
-    @UpdateDateColumn({nullable: false})
+    @UpdateDateColumn({ nullable: false })
     updatedAt: Date
 }

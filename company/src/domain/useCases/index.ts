@@ -7,3 +7,4 @@ export * from "./IGetCompanyByIdUseCase";
 export * from "./ICreateUserUseCase";
 export * from "./IUpdateUserUseCase";
 export * from "./IDeleteUserUseCase";
+export * from "./IGetUserByIdUseCase";
