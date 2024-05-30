@@ -1,14 +1,20 @@
 import { ISubscriber } from "@company-management/common";
-import { employeeCreated, employeeUpdated, userCreatedConsumer } from "./consumer";
+import { 
+    employeeCreated, 
+    employeeUpdated, 
+    employeeDeleted, 
+    userCreatedConsumer 
+} from "./consumer";
 
 export interface IUserSubscriber extends Pick<
-    ISubscriber, 'userCreated' | 'employeeCreated' | 'employeeUpdated'
+    ISubscriber, 'userCreated' | 'employeeCreated' | 'employeeUpdated' | 'employeeDeleted'
 > { }
 
 export const createSubscriber = (): IUserSubscriber => {
     return {
         userCreated: userCreatedConsumer,
         employeeCreated: employeeCreated,
-        employeeUpdated: employeeUpdated
+        employeeUpdated: employeeUpdated,
+        employeeDeleted: employeeDeleted
     }
 }
