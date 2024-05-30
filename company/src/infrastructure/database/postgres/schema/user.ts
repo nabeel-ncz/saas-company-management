@@ -1,4 +1,4 @@
-import { Entity, Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, ManyToOne } from "typeorm";
+import { Entity, Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, ManyToOne, DeleteDateColumn } from "typeorm";
 import { Company } from "./company";
 
 export enum UserRole {
@@ -41,4 +41,7 @@ export class User {
 
     @UpdateDateColumn({ nullable: false })
     updatedAt: Date
+    
+    @DeleteDateColumn({ nullable: false })
+    deletedAt: Date
 }
