@@ -40,7 +40,9 @@ export const updateUser = async ({
     if(designation) {
         user.designation = designation;
     }
-    if(companyId) {
+    if(companyId === null || companyId === undefined) {
+        user.companyId = null;
+    } else {
         user.companyId = companyId;
     }
     const result = await userRepository.save(user);
