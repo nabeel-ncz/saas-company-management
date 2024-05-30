@@ -23,4 +23,5 @@ export interface IRepositories {
     createCompany: (data: CreateCompanyParams) => Promise<CompanyEntity | Error | null>;
     updateCompany: (data: UpdateCompanyParams) => Promise<CompanyEntity | Error | null>;
     deleteCompany: (data: DeleteCompanyParams) => Promise<void>;
+    getCompaniesByOwnerId: (id: number) => Promise<CompanyEntity[] | Error>;
 };
