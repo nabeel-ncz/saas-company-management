@@ -1,6 +1,6 @@
-import * as express from "express";
+import express from "express";
 import { Application, Request, Response, NextFunction } from "express";
-import { createProxyMiddleware, responseInterceptor } from "http-proxy-middleware";
+import { createProxyMiddleware } from "http-proxy-middleware";
 
 const app: Application = express();
 
@@ -20,9 +20,9 @@ const proxyOptions = (target: string) => ({
 });
 
 // Proxy middlewares
-const AuthService = createProxyMiddleware<Request, Response>(proxyOptions('http://localhost:3001/api/auth'));
-const UserService = createProxyMiddleware<Request, Response>(proxyOptions('http://localhost:3003/api/user'));
-const CompanyService = createProxyMiddleware<Request, Response>(proxyOptions('http://localhost:3004/api/company'));
+const AuthService = createProxyMiddleware<Request, Response>(proxyOptions(process.env.AUTH_SERVICE_URL || 'http://localhost:3001/api/auth'));
+const UserService = createProxyMiddleware<Request, Response>(proxyOptions(process.env.USER_SERVICE_URL || 'http://localhost:3003/api/user'));
+const CompanyService = createProxyMiddleware<Request, Response>(proxyOptions(process.env.COMPANY_SERVICE_URL || 'http://localhost:3004/api/company'));
 
 app.use('/api/auth', AuthService);
 app.use('/api/user', UserService);
